@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.taobao.dao.TbTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.yohoo.taobao.po.TbType" >
+    <id column="typ_id" property="typId" jdbcType="VARCHAR" />
+    <result column="typ_title" property="typTitle" jdbcType="VARCHAR" />
+    <result column="typ_describe" property="typDescribe" jdbcType="VARCHAR" />
+    <result column="sorts" property="sorts" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    typ_id, typ_title, typ_describe, sorts, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.taobao.po.TbTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_type
+    where typ_id = #{typId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_type
+    where typ_id = #{typId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yohoo.taobao.po.TbTypeExample" >
+    delete from tb_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yohoo.taobao.po.TbType" >
+    insert into tb_type (typ_id, typ_title, typ_describe, 
+      sorts, status)
+    values (#{typId,jdbcType=VARCHAR}, #{typTitle,jdbcType=VARCHAR}, #{typDescribe,jdbcType=VARCHAR}, 
+      #{sorts,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yohoo.taobao.po.TbType" >
+    insert into tb_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typId != null" >
+        typ_id,
+      </if>
+      <if test="typTitle != null" >
+        typ_title,
+      </if>
+      <if test="typDescribe != null" >
+        typ_describe,
+      </if>
+      <if test="sorts != null" >
+        sorts,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typId != null" >
+        #{typId,jdbcType=VARCHAR},
+      </if>
+      <if test="typTitle != null" >
+        #{typTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="typDescribe != null" >
+        #{typDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null" >
+        #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yohoo.taobao.po.TbTypeExample" resultType="java.lang.Integer" >
+    select count(*) from tb_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_type
+    <set >
+      <if test="record.typId != null" >
+        typ_id = #{record.typId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typTitle != null" >
+        typ_title = #{record.typTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typDescribe != null" >
+        typ_describe = #{record.typDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sorts != null" >
+        sorts = #{record.sorts,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_type
+    set typ_id = #{record.typId,jdbcType=VARCHAR},
+      typ_title = #{record.typTitle,jdbcType=VARCHAR},
+      typ_describe = #{record.typDescribe,jdbcType=VARCHAR},
+      sorts = #{record.sorts,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.taobao.po.TbType" >
+    update tb_type
+    <set >
+      <if test="typTitle != null" >
+        typ_title = #{typTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="typDescribe != null" >
+        typ_describe = #{typDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="sorts != null" >
+        sorts = #{sorts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where typ_id = #{typId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yohoo.taobao.po.TbType" >
+    update tb_type
+    set typ_title = #{typTitle,jdbcType=VARCHAR},
+      typ_describe = #{typDescribe,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where typ_id = #{typId,jdbcType=VARCHAR}
+  </update>
+</mapper>

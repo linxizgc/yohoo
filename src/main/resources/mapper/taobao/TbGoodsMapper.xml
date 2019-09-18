@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.taobao.dao.TbGoodsMapper">
+    <resultMap id="BaseResultMap" type="com.yohoo.taobao.bo.TbGoodsBo">
+        <id column="goo_id" property="gooId" jdbcType="VARCHAR"/>
+        <result column="goo_type" property="gooType" jdbcType="VARCHAR"/>
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+        <result column="goo_name" property="gooName" jdbcType="VARCHAR"/>
+        <result column="goo_img" property="gooImg" jdbcType="VARCHAR"/>
+        <result column="month_sale" property="monthSale" jdbcType="INTEGER"/>
+        <result column="goo_price" property="gooPrice" jdbcType="REAL"/>
+        <result column="goo_now_price" property="gooNowPrice" jdbcType="REAL"/>
+        <result column="income_ratio" property="incomeRatio" jdbcType="REAL"/>
+        <result column="commission" property="commission" jdbcType="REAL"/>
+        <result column="tk_url" property="tkUrl" jdbcType="VARCHAR"/>
+        <result column="tk_password" property="tkPassword" jdbcType="VARCHAR"/>
+        <result column="coupon_total" property="couponTotal" jdbcType="VARCHAR"/>
+        <result column="coupon_surp" property="couponSurp" jdbcType="VARCHAR"/>
+        <result column="coupon_val" property="couponVal" jdbcType="INTEGER"/>
+        <result column="coupon_url" property="couponUrl" jdbcType="VARCHAR"/>
+        <result column="coupon_password" property="couponPassword" jdbcType="VARCHAR"/>
+        <result column="coupon_begin" property="couponBegin" jdbcType="TIMESTAMP"/>
+        <result column="coupon_end" property="couponEnd" jdbcType="TIMESTAMP"/>
+        <result column="sorts" property="sorts" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        goo_id, goo_type, shop_name, goo_name, goo_img, month_sale, goo_price, goo_now_price,
+        income_ratio, commission, tk_url, tk_password, coupon_total, coupon_surp, coupon_val,
+        coupon_url, coupon_password, coupon_begin, coupon_end, sorts, status
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.taobao.po.TbGoodsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from tb_goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_goods
+        where goo_id = #{gooId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from tb_goods
+        where goo_id = #{gooId,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.yohoo.taobao.po.TbGoodsExample">
+        delete from tb_goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.yohoo.taobao.po.TbGoods">
+        insert into tb_goods (goo_id, goo_type, shop_name,
+        goo_name, goo_img, month_sale,
+        goo_price, goo_now_price, income_ratio,
+        commission, tk_url, tk_password,
+        coupon_total, coupon_surp, coupon_val,
+        coupon_url, coupon_password, coupon_begin,
+        coupon_end, sorts, status
+        )
+        values (#{gooId,jdbcType=VARCHAR}, #{gooType,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR},
+        #{gooName,jdbcType=VARCHAR}, #{gooImg,jdbcType=VARCHAR}, #{monthSale,jdbcType=INTEGER},
+        #{gooPrice,jdbcType=REAL}, #{gooNowPrice,jdbcType=REAL}, #{incomeRatio,jdbcType=REAL},
+        #{commission,jdbcType=REAL}, #{tkUrl,jdbcType=VARCHAR}, #{tkPassword,jdbcType=VARCHAR},
+        #{couponTotal,jdbcType=VARCHAR}, #{couponSurp,jdbcType=VARCHAR}, #{couponVal,jdbcType=INTEGER},
+        #{couponUrl,jdbcType=VARCHAR}, #{couponPassword,jdbcType=VARCHAR}, #{couponBegin,jdbcType=TIMESTAMP},
+        #{couponEnd,jdbcType=TIMESTAMP}, #{sorts,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.yohoo.taobao.po.TbGoods">
+        insert into tb_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="gooId != null">
+                goo_id,
+            </if>
+            <if test="gooType != null">
+                goo_type,
+            </if>
+            <if test="shopName != null">
+                shop_name,
+            </if>
+            <if test="gooName != null">
+                goo_name,
+            </if>
+            <if test="gooImg != null">
+                goo_img,
+            </if>
+            <if test="monthSale != null">
+                month_sale,
+            </if>
+            <if test="gooPrice != null">
+                goo_price,
+            </if>
+            <if test="gooNowPrice != null">
+                goo_now_price,
+            </if>
+            <if test="incomeRatio != null">
+                income_ratio,
+            </if>
+            <if test="commission != null">
+                commission,
+            </if>
+            <if test="tkUrl != null">
+                tk_url,
+            </if>
+            <if test="tkPassword != null">
+                tk_password,
+            </if>
+            <if test="couponTotal != null">
+                coupon_total,
+            </if>
+            <if test="couponSurp != null">
+                coupon_surp,
+            </if>
+            <if test="couponVal != null">
+                coupon_val,
+            </if>
+            <if test="couponUrl != null">
+                coupon_url,
+            </if>
+            <if test="couponPassword != null">
+                coupon_password,
+            </if>
+            <if test="couponBegin != null">
+                coupon_begin,
+            </if>
+            <if test="couponEnd != null">
+                coupon_end,
+            </if>
+            <if test="sorts != null">
+                sorts,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="gooId != null">
+                #{gooId,jdbcType=VARCHAR},
+            </if>
+            <if test="gooType != null">
+                #{gooType,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null">
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="gooName != null">
+                #{gooName,jdbcType=VARCHAR},
+            </if>
+            <if test="gooImg != null">
+                #{gooImg,jdbcType=VARCHAR},
+            </if>
+            <if test="monthSale != null">
+                #{monthSale,jdbcType=INTEGER},
+            </if>
+            <if test="gooPrice != null">
+                #{gooPrice,jdbcType=REAL},
+            </if>
+            <if test="gooNowPrice != null">
+                #{gooNowPrice,jdbcType=REAL},
+            </if>
+            <if test="incomeRatio != null">
+                #{incomeRatio,jdbcType=REAL},
+            </if>
+            <if test="commission != null">
+                #{commission,jdbcType=REAL},
+            </if>
+            <if test="tkUrl != null">
+                #{tkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="tkPassword != null">
+                #{tkPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="couponTotal != null">
+                #{couponTotal,jdbcType=VARCHAR},
+            </if>
+            <if test="couponSurp != null">
+                #{couponSurp,jdbcType=VARCHAR},
+            </if>
+            <if test="couponVal != null">
+                #{couponVal,jdbcType=INTEGER},
+            </if>
+            <if test="couponUrl != null">
+                #{couponUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="couponPassword != null">
+                #{couponPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="couponBegin != null">
+                #{couponBegin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponEnd != null">
+                #{couponEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sorts != null">
+                #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.yohoo.taobao.po.TbGoodsExample" resultType="java.lang.Integer">
+        select count(*) from tb_goods
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update tb_goods
+        <set>
+            <if test="record.gooId != null">
+                goo_id = #{record.gooId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gooType != null">
+                goo_type = #{record.gooType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shopName != null">
+                shop_name = #{record.shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gooName != null">
+                goo_name = #{record.gooName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.gooImg != null">
+                goo_img = #{record.gooImg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.monthSale != null">
+                month_sale = #{record.monthSale,jdbcType=INTEGER},
+            </if>
+            <if test="record.gooPrice != null">
+                goo_price = #{record.gooPrice,jdbcType=REAL},
+            </if>
+            <if test="record.gooNowPrice != null">
+                goo_now_price = #{record.gooNowPrice,jdbcType=REAL},
+            </if>
+            <if test="record.incomeRatio != null">
+                income_ratio = #{record.incomeRatio,jdbcType=REAL},
+            </if>
+            <if test="record.commission != null">
+                commission = #{record.commission,jdbcType=REAL},
+            </if>
+            <if test="record.tkUrl != null">
+                tk_url = #{record.tkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tkPassword != null">
+                tk_password = #{record.tkPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.couponTotal != null">
+                coupon_total = #{record.couponTotal,jdbcType=VARCHAR},
+            </if>
+            <if test="record.couponSurp != null">
+                coupon_surp = #{record.couponSurp,jdbcType=VARCHAR},
+            </if>
+            <if test="record.couponVal != null">
+                coupon_val = #{record.couponVal,jdbcType=INTEGER},
+            </if>
+            <if test="record.couponUrl != null">
+                coupon_url = #{record.couponUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.couponPassword != null">
+                coupon_password = #{record.couponPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.couponBegin != null">
+                coupon_begin = #{record.couponBegin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.couponEnd != null">
+                coupon_end = #{record.couponEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.sorts != null">
+                sorts = #{record.sorts,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update tb_goods
+        set goo_id = #{record.gooId,jdbcType=VARCHAR},
+        goo_type = #{record.gooType,jdbcType=VARCHAR},
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+        goo_name = #{record.gooName,jdbcType=VARCHAR},
+        goo_img = #{record.gooImg,jdbcType=VARCHAR},
+        month_sale = #{record.monthSale,jdbcType=INTEGER},
+        goo_price = #{record.gooPrice,jdbcType=REAL},
+        goo_now_price = #{record.gooNowPrice,jdbcType=REAL},
+        income_ratio = #{record.incomeRatio,jdbcType=REAL},
+        commission = #{record.commission,jdbcType=REAL},
+        tk_url = #{record.tkUrl,jdbcType=VARCHAR},
+        tk_password = #{record.tkPassword,jdbcType=VARCHAR},
+        coupon_total = #{record.couponTotal,jdbcType=VARCHAR},
+        coupon_surp = #{record.couponSurp,jdbcType=VARCHAR},
+        coupon_val = #{record.couponVal,jdbcType=INTEGER},
+        coupon_url = #{record.couponUrl,jdbcType=VARCHAR},
+        coupon_password = #{record.couponPassword,jdbcType=VARCHAR},
+        coupon_begin = #{record.couponBegin,jdbcType=TIMESTAMP},
+        coupon_end = #{record.couponEnd,jdbcType=TIMESTAMP},
+        sorts = #{record.sorts,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.taobao.po.TbGoods">
+        update tb_goods
+        <set>
+            <if test="gooType != null">
+                goo_type = #{gooType,jdbcType=VARCHAR},
+            </if>
+            <if test="shopName != null">
+                shop_name = #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="gooName != null">
+                goo_name = #{gooName,jdbcType=VARCHAR},
+            </if>
+            <if test="gooImg != null">
+                goo_img = #{gooImg,jdbcType=VARCHAR},
+            </if>
+            <if test="monthSale != null">
+                month_sale = #{monthSale,jdbcType=INTEGER},
+            </if>
+            <if test="gooPrice != null">
+                goo_price = #{gooPrice,jdbcType=REAL},
+            </if>
+            <if test="gooNowPrice != null">
+                goo_now_price = #{gooNowPrice,jdbcType=REAL},
+            </if>
+            <if test="incomeRatio != null">
+                income_ratio = #{incomeRatio,jdbcType=REAL},
+            </if>
+            <if test="commission != null">
+                commission = #{commission,jdbcType=REAL},
+            </if>
+            <if test="tkUrl != null">
+                tk_url = #{tkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="tkPassword != null">
+                tk_password = #{tkPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="couponTotal != null">
+                coupon_total = #{couponTotal,jdbcType=VARCHAR},
+            </if>
+            <if test="couponSurp != null">
+                coupon_surp = #{couponSurp,jdbcType=VARCHAR},
+            </if>
+            <if test="couponVal != null">
+                coupon_val = #{couponVal,jdbcType=INTEGER},
+            </if>
+            <if test="couponUrl != null">
+                coupon_url = #{couponUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="couponPassword != null">
+                coupon_password = #{couponPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="couponBegin != null">
+                coupon_begin = #{couponBegin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="couponEnd != null">
+                coupon_end = #{couponEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sorts != null">
+                sorts = #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where goo_id = #{gooId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yohoo.taobao.po.TbGoods">
+    update tb_goods
+    set goo_type = #{gooType,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      goo_name = #{gooName,jdbcType=VARCHAR},
+      goo_img = #{gooImg,jdbcType=VARCHAR},
+      month_sale = #{monthSale,jdbcType=INTEGER},
+      goo_price = #{gooPrice,jdbcType=REAL},
+      goo_now_price = #{gooNowPrice,jdbcType=REAL},
+      income_ratio = #{incomeRatio,jdbcType=REAL},
+      commission = #{commission,jdbcType=REAL},
+      tk_url = #{tkUrl,jdbcType=VARCHAR},
+      tk_password = #{tkPassword,jdbcType=VARCHAR},
+      coupon_total = #{couponTotal,jdbcType=VARCHAR},
+      coupon_surp = #{couponSurp,jdbcType=VARCHAR},
+      coupon_val = #{couponVal,jdbcType=INTEGER},
+      coupon_url = #{couponUrl,jdbcType=VARCHAR},
+      coupon_password = #{couponPassword,jdbcType=VARCHAR},
+      coupon_begin = #{couponBegin,jdbcType=TIMESTAMP},
+      coupon_end = #{couponEnd,jdbcType=TIMESTAMP},
+      sorts = #{sorts,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where goo_id = #{gooId,jdbcType=VARCHAR}
+  </update>
+
+
+    <select id="selectRows" resultType="com.yohoo.taobao.bo.TbGoodsBo"
+            parameterType="com.yohoo.taobao.bo.TbGoodsBo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_goods
+        <where>
+            <if test="gooName != null and gooName != ''">
+                AND goo_name like CONCAT('%',#{gooName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRows_i" resultType="com.yohoo.taobao.bo.TbGoodsBo"
+            parameterType="com.yohoo.taobao.bo.TbGoodsBo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_goods
+        WHERE status = '1'
+        <if test="gooType != null and gooType != ''">
+            AND goo_type = #{gooType,jdbcType=VARCHAR}
+        </if>
+        <if test="gooName != null and gooName != ''">
+            AND goo_name like CONCAT('%',#{gooName,jdbcType=VARCHAR},'%')
+        </if>
+        ORDER BY sorts
+    </select>
+
+    <select id="getTbType" resultType="com.yohoo.taobao.bo.TbTypeBo"
+            parameterType="java.lang.String">
+        SELECT
+        typ_id, typ_title, typ_describe, sorts, status
+        FROM tb_type
+        WHERE typ_title = #{typTitle,jdbcType=VARCHAR}
+    </select>
+</mapper>

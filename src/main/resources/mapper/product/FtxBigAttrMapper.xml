@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.product.dao.FtxBigAttrMapper">
+    <resultMap id="BaseResultMap" type="com.yohoo.product.bo.FtxBigAttrBo">
+        <id column="big_attr_id" property="bigAttrId" jdbcType="VARCHAR"/>
+        <result column="big_attr_name" property="bigAttrName" jdbcType="VARCHAR"/>
+        <result column="sorts" property="sorts" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    big_attr_id, big_attr_name, sorts, content, logo
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.product.po.FtxBigAttrExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from ftx_big_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ftx_big_attr
+        where big_attr_id = #{bigAttrId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ftx_big_attr
+    where big_attr_id = #{bigAttrId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.yohoo.product.po.FtxBigAttrExample">
+        delete from ftx_big_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.yohoo.product.po.FtxBigAttr">
+    insert into ftx_big_attr (big_attr_id, big_attr_name, sorts, 
+      content, logo)
+    values (#{bigAttrId,jdbcType=VARCHAR}, #{bigAttrName,jdbcType=VARCHAR}, #{sorts,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.yohoo.product.po.FtxBigAttr">
+        insert into ftx_big_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="bigAttrId != null">
+                big_attr_id,
+            </if>
+            <if test="bigAttrName != null">
+                big_attr_name,
+            </if>
+            <if test="sorts != null">
+                sorts,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="bigAttrId != null">
+                #{bigAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="bigAttrName != null">
+                #{bigAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.yohoo.product.po.FtxBigAttrExample" resultType="java.lang.Integer">
+        select count(*) from ftx_big_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update ftx_big_attr
+        <set>
+            <if test="record.bigAttrId != null">
+                big_attr_id = #{record.bigAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bigAttrName != null">
+                big_attr_name = #{record.bigAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sorts != null">
+                sorts = #{record.sorts,jdbcType=INTEGER},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
+            <if test="record.logo != null">
+                logo = #{record.logo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update ftx_big_attr
+        set big_attr_id = #{record.bigAttrId,jdbcType=VARCHAR},
+        big_attr_name = #{record.bigAttrName,jdbcType=VARCHAR},
+        sorts = #{record.sorts,jdbcType=INTEGER},
+        content = #{record.content,jdbcType=VARCHAR},
+        logo = #{record.logo,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.product.po.FtxBigAttr">
+        update ftx_big_attr
+        <set>
+            <if test="bigAttrName != null">
+                big_attr_name = #{bigAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                sorts = #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where big_attr_id = #{bigAttrId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yohoo.product.po.FtxBigAttr">
+    update ftx_big_attr
+    set big_attr_name = #{bigAttrName,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR}
+    where big_attr_id = #{bigAttrId,jdbcType=VARCHAR}
+  </update>
+
+
+    <select id="selectRows" resultType="com.yohoo.product.bo.FtxBigAttrBo"
+            parameterType="com.yohoo.product.bo.FtxBigAttrBo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ftx_big_attr
+        <where>
+            <if test="bigAttrName != null and bigAttrName != ''">
+                AND big_attr_name like CONCAT('%',#{bigAttrName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        ORDER BY sorts
+    </select>
+</mapper>

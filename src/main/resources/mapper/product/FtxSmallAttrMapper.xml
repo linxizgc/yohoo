@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.product.dao.FtxSmallAttrMapper">
+    <resultMap id="BaseResultMap" type="com.yohoo.product.bo.FtxSmallAttrBo">
+        <id column="small_attr_id" property="smallAttrId" jdbcType="VARCHAR"/>
+        <result column="small_attr_name" property="smallAttrName" jdbcType="VARCHAR"/>
+        <result column="parent_attr_id" property="parentAttrId" jdbcType="VARCHAR"/>
+        <result column="sorts" property="sorts" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="add_price" property="addPrice" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    small_attr_id, small_attr_name, parent_attr_id, sorts, content, add_price, logo
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.product.po.FtxSmallAttrExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from ftx_small_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from ftx_small_attr
+        where small_attr_id = #{smallAttrId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ftx_small_attr
+    where small_attr_id = #{smallAttrId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.yohoo.product.po.FtxSmallAttrExample">
+        delete from ftx_small_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.yohoo.product.po.FtxSmallAttr">
+    insert into ftx_small_attr (small_attr_id, small_attr_name, parent_attr_id, 
+      sorts, content, add_price, 
+      logo)
+    values (#{smallAttrId,jdbcType=VARCHAR}, #{smallAttrName,jdbcType=VARCHAR}, #{parentAttrId,jdbcType=VARCHAR}, 
+      #{sorts,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{addPrice,jdbcType=VARCHAR}, 
+      #{logo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.yohoo.product.po.FtxSmallAttr">
+        insert into ftx_small_attr
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="smallAttrId != null">
+                small_attr_id,
+            </if>
+            <if test="smallAttrName != null">
+                small_attr_name,
+            </if>
+            <if test="parentAttrId != null">
+                parent_attr_id,
+            </if>
+            <if test="sorts != null">
+                sorts,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="addPrice != null">
+                add_price,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="smallAttrId != null">
+                #{smallAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="smallAttrName != null">
+                #{smallAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentAttrId != null">
+                #{parentAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="addPrice != null">
+                #{addPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.yohoo.product.po.FtxSmallAttrExample" resultType="java.lang.Integer">
+        select count(*) from ftx_small_attr
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update ftx_small_attr
+        <set>
+            <if test="record.smallAttrId != null">
+                small_attr_id = #{record.smallAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.smallAttrName != null">
+                small_attr_name = #{record.smallAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentAttrId != null">
+                parent_attr_id = #{record.parentAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sorts != null">
+                sorts = #{record.sorts,jdbcType=INTEGER},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
+            <if test="record.addPrice != null">
+                add_price = #{record.addPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="record.logo != null">
+                logo = #{record.logo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update ftx_small_attr
+        set small_attr_id = #{record.smallAttrId,jdbcType=VARCHAR},
+        small_attr_name = #{record.smallAttrName,jdbcType=VARCHAR},
+        parent_attr_id = #{record.parentAttrId,jdbcType=VARCHAR},
+        sorts = #{record.sorts,jdbcType=INTEGER},
+        content = #{record.content,jdbcType=VARCHAR},
+        add_price = #{record.addPrice,jdbcType=VARCHAR},
+        logo = #{record.logo,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.product.po.FtxSmallAttr">
+        update ftx_small_attr
+        <set>
+            <if test="smallAttrName != null">
+                small_attr_name = #{smallAttrName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentAttrId != null">
+                parent_attr_id = #{parentAttrId,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                sorts = #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="addPrice != null">
+                add_price = #{addPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where small_attr_id = #{smallAttrId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yohoo.product.po.FtxSmallAttr">
+    update ftx_small_attr
+    set small_attr_name = #{smallAttrName,jdbcType=VARCHAR},
+      parent_attr_id = #{parentAttrId,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      add_price = #{addPrice,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR}
+    where small_attr_id = #{smallAttrId,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectRows" resultType="com.yohoo.product.bo.FtxSmallAttrBo"
+            parameterType="com.yohoo.product.bo.FtxSmallAttrBo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ftx_small_attr
+        <where>
+            <if test="parentAttrId != null and parentAttrId != ''">
+                AND parent_attr_id = #{parentAttrId,jdbcType=VARCHAR}
+            </if>
+            <if test="smallAttrName != null and smallAttrName != ''">
+                AND small_attr_name like CONCAT('%',#{smallAttrName,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+        ORDER BY sorts
+    </select>
+</mapper>

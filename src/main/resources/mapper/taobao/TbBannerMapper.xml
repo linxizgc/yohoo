@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.taobao.dao.TbBannerMapper">
+    <resultMap id="BaseResultMap" type="com.yohoo.taobao.bo.TbBannerBo">
+        <id column="ban_id" property="banId" jdbcType="VARCHAR"/>
+        <result column="ban_title" property="banTitle" jdbcType="VARCHAR"/>
+        <result column="link_url" property="linkUrl" jdbcType="VARCHAR"/>
+        <result column="link_img" property="linkImg" jdbcType="VARCHAR"/>
+        <result column="sorts" property="sorts" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ban_id, ban_title, link_url, link_img, sorts, status
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.taobao.po.TbBannerExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from tb_banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_banner
+        where ban_id = #{banId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_banner
+    where ban_id = #{banId,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.yohoo.taobao.po.TbBannerExample">
+        delete from tb_banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.yohoo.taobao.po.TbBanner">
+    insert into tb_banner (ban_id, ban_title, link_url, 
+      link_img, sorts, status
+      )
+    values (#{banId,jdbcType=VARCHAR}, #{banTitle,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}, 
+      #{linkImg,jdbcType=VARCHAR}, #{sorts,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.yohoo.taobao.po.TbBanner">
+        insert into tb_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="banId != null">
+                ban_id,
+            </if>
+            <if test="banTitle != null">
+                ban_title,
+            </if>
+            <if test="linkUrl != null">
+                link_url,
+            </if>
+            <if test="linkImg != null">
+                link_img,
+            </if>
+            <if test="sorts != null">
+                sorts,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="banId != null">
+                #{banId,jdbcType=VARCHAR},
+            </if>
+            <if test="banTitle != null">
+                #{banTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="linkUrl != null">
+                #{linkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="linkImg != null">
+                #{linkImg,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.yohoo.taobao.po.TbBannerExample" resultType="java.lang.Integer">
+        select count(*) from tb_banner
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update tb_banner
+        <set>
+            <if test="record.banId != null">
+                ban_id = #{record.banId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.banTitle != null">
+                ban_title = #{record.banTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.linkUrl != null">
+                link_url = #{record.linkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.linkImg != null">
+                link_img = #{record.linkImg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sorts != null">
+                sorts = #{record.sorts,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update tb_banner
+        set ban_id = #{record.banId,jdbcType=VARCHAR},
+        ban_title = #{record.banTitle,jdbcType=VARCHAR},
+        link_url = #{record.linkUrl,jdbcType=VARCHAR},
+        link_img = #{record.linkImg,jdbcType=VARCHAR},
+        sorts = #{record.sorts,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.taobao.po.TbBanner">
+        update tb_banner
+        <set>
+            <if test="banTitle != null">
+                ban_title = #{banTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="linkUrl != null">
+                link_url = #{linkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="linkImg != null">
+                link_img = #{linkImg,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                sorts = #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ban_id = #{banId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yohoo.taobao.po.TbBanner">
+    update tb_banner
+    set ban_title = #{banTitle,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      link_img = #{linkImg,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where ban_id = #{banId,jdbcType=VARCHAR}
+  </update>
+
+
+    <select id="selectRows" resultType="com.yohoo.taobao.bo.TbBannerBo"
+            parameterType="com.yohoo.taobao.bo.TbBannerBo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM tb_banner
+        <where>
+            <if test="banTitle != null and banTitle != ''">
+                AND ban_title like CONCAT('%',#{banTitle,jdbcType=VARCHAR},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yohoo.system.dao.AdminMenuDao">
+    <resultMap id="BaseResultMap" type="com.yohoo.system.bo.AdminMenuBo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="parent_menu_Id" property="parentMenuId" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menu_code" property="menuCode" jdbcType="VARCHAR"/>
+        <result column="uri" property="uri" jdbcType="VARCHAR"/>
+        <result column="sorts" property="sorts" jdbcType="INTEGER"/>
+        <result column="menu_level" property="menuLevel" jdbcType="INTEGER"/>
+        <result column="icon" property="icon" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, parent_menu_Id, menu_name, menu_code, uri, sorts, menu_level, icon
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yohoo.system.po.AdminMenuExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_menu
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.yohoo.system.po.AdminMenuExample">
+        delete from admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.yohoo.system.po.AdminMenu">
+    insert into admin_menu (id, parent_menu_Id, menu_name, 
+      menu_code, uri, sorts, 
+      menu_level, icon)
+    values (#{id,jdbcType=INTEGER}, #{parentMenuId,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
+      #{menuCode,jdbcType=VARCHAR}, #{uri,jdbcType=VARCHAR}, #{sorts,jdbcType=INTEGER}, 
+      #{menuLevel,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.yohoo.system.po.AdminMenu">
+        insert into admin_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="parentMenuId != null">
+                parent_menu_Id,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="menuCode != null">
+                menu_code,
+            </if>
+            <if test="uri != null">
+                uri,
+            </if>
+            <if test="sorts != null">
+                sorts,
+            </if>
+            <if test="menuLevel != null">
+                menu_level,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="parentMenuId != null">
+                #{parentMenuId,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuCode != null">
+                #{menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null">
+                #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="menuLevel != null">
+                #{menuLevel,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                #{icon,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.yohoo.system.po.AdminMenuExample" resultType="java.lang.Integer">
+        select count(*) from admin_menu
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update admin_menu
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentMenuId != null">
+                parent_menu_Id = #{record.parentMenuId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.menuName != null">
+                menu_name = #{record.menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.menuCode != null">
+                menu_code = #{record.menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="record.uri != null">
+                uri = #{record.uri,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sorts != null">
+                sorts = #{record.sorts,jdbcType=INTEGER},
+            </if>
+            <if test="record.menuLevel != null">
+                menu_level = #{record.menuLevel,jdbcType=INTEGER},
+            </if>
+            <if test="record.icon != null">
+                icon = #{record.icon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update admin_menu
+        set id = #{record.id,jdbcType=INTEGER},
+        parent_menu_Id = #{record.parentMenuId,jdbcType=VARCHAR},
+        menu_name = #{record.menuName,jdbcType=VARCHAR},
+        menu_code = #{record.menuCode,jdbcType=VARCHAR},
+        uri = #{record.uri,jdbcType=VARCHAR},
+        sorts = #{record.sorts,jdbcType=INTEGER},
+        menu_level = #{record.menuLevel,jdbcType=INTEGER},
+        icon = #{record.icon,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yohoo.system.po.AdminMenu">
+        update admin_menu
+        <set>
+            <if test="parentMenuId != null">
+                parent_menu_Id = #{parentMenuId,jdbcType=VARCHAR},
+            </if>
+            <if test="menuName != null">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuCode != null">
+                menu_code = #{menuCode,jdbcType=VARCHAR},
+            </if>
+            <if test="uri != null">
+                uri = #{uri,jdbcType=VARCHAR},
+            </if>
+            <if test="sorts != null">
+                sorts = #{sorts,jdbcType=INTEGER},
+            </if>
+            <if test="menuLevel != null">
+                menu_level = #{menuLevel,jdbcType=INTEGER},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yohoo.system.po.AdminMenu">
+    update admin_menu
+    set parent_menu_Id = #{parentMenuId,jdbcType=VARCHAR},
+      menu_name = #{menuName,jdbcType=VARCHAR},
+      menu_code = #{menuCode,jdbcType=VARCHAR},
+      uri = #{uri,jdbcType=VARCHAR},
+      sorts = #{sorts,jdbcType=INTEGER},
+      menu_level = #{menuLevel,jdbcType=INTEGER},
+      icon = #{icon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectTreeList" resultType="com.yohoo.system.bo.TreeMenu"
+            parameterType="com.yohoo.system.bo.AdminUserBo">
+    SELECT
+       id id, parent_menu_Id parentMenuId,  menu_name menuName,  menu_code menuCode,  uri uri,  sorts sorts,  menu_level menuLevel,  icon icon
+    FROM ADMIN_MENU
+    ORDER BY SORTS
+  </select>
+
+    <select id="selectMenusByUserId" resultType="com.yohoo.system.bo.TreeMenu"
+            parameterType="java.lang.Integer">
+      select
+        m.id, m.parent_menu_id, m.menu_name,m.menu_code,m.uri,m.sorts,m.menu_level,m.icon
+      from  admin_menu m
+      GROUP BY m.menu_code
+      ORDER BY m.id
+--       select
+--         m.id, m.parent_menu_id, m.menu_name,m.menu_code,m.uri,m.sorts,m.menu_level,m.icon
+--       from  admin_user u
+--       left join admin_user_role ur on u.id = ur.user_id
+--       left join admin_role r on ur.role_id = r.id
+--       left join admin_role_menu rm on r.id = rm.role_id
+--       left join admin_menu m on rm.menu_id = m.id
+--       GROUP BY m.menu_code
+--       ORDER BY m.id
+  </select>
+</mapper>
